@@ -1,0 +1,40 @@
+services:
+
+  pleroma:
+    image: jordemort/pleroma
+    build: ../
+    restart: unless-stopped
+    networks:
+      pleromanet:
+    ports:
+      - 127.0.0.1:4000:4000
+    volumes:
+      - config:/etc/pleroma
+      - uploads:/var/lib/pleroma/uploads
+      - static:/var/lib/pleroma/static
+    environment:
+      DOMAIN: localhost
+      ADMIN_EMAIL: chicken@example.com
+      USE_RUM: "y"
+      POSTGRES_PASSWORD: hunter2
+
+  postgres:
+    image: jordemort/postgres-rum
+    restart: unless-stopped
+    networks:
+      pleromanet:
+    volumes:
+      - data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: pleroma
+      POSTGRES_USER: pleroma
+      POSTGRES_PASSWORD: hunter2
+
+networks:
+  pleromanet:
+
+volumes:
+  config:
+  uploads:
+  static:
+  data:
