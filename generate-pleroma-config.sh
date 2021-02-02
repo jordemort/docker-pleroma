@@ -16,7 +16,6 @@ if [ -z "${POSTGRES_PASSWORD:-}" ] ; then
   echo "ERROR: Please set POSTGRES_PASSWORD before generating config" >&2
   exit 1
 fi
-set -x
 
 pleroma_ctl instance gen --output "$PLEROMA_CONFIG_PATH" \
   --output-psql /tmp/setup_db.sql \
