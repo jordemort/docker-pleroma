@@ -1,4 +1,26 @@
-FROM ubuntu:20.04
+FROM ubuntu:20.04 AS unzip
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends unzip
+
+# Set the flavour arg to the string you got in Detecting flavour section.
+# For example if the flavour is `amd64` the command will be
+ARG FLAVOUR=amd64
+
+# Clone the release build into a temporary directory and unpack it
+# We use ADD here to bust the cache if the pleroma release changes
+# We use a separate layer for extraction so we don't end up with junk
+# from ADD left over in the final image.
+ADD https://git.pleroma.social/api/v4/projects/2/jobs/artifacts/stable/download?job=${FLAVOUR} /tmp/pleroma.zip
+
+RUN mkdir -p /opt/pleroma && \
+    unzip /tmp/pleroma.zip -d /tmp/ && \
+    mv /tmp/release/* /opt/pleroma
+
+# Ok, really build the container now
+FROM ubuntu:20.04 AS pleroma
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -18,25 +40,16 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-RUN mkdir -p /var/lib/pleroma/uploads /var/lib/pleroma/static /etc/pleroma && \
-    adduser --system --shell /bin/false --home /opt/pleroma pleroma && \
-    chown -R pleroma /var/lib/pleroma /etc/pleroma
+
+RUN mkdir -p /etc/pleroma /var/lib/pleroma/static /var/lib/pleroma/uploads && \
+    adduser --system --shell /bin/false --home /opt/pleroma --group pleroma && \
+    chown -vR pleroma /etc/pleroma /var/lib/pleroma
+
+COPY --chown=pleroma:pleroma --from=unzip /opt/pleroma/ /opt/pleroma/
 
 VOLUME [ "/etc/pleroma", "/var/lib/pleroma/uploads", "/var/lib/pleroma/static" ]
 
 USER pleroma
-
-# Set the flavour environment variable to the string you got in Detecting flavour section.
-# For example if the flavour is `amd64-musl` the command will be
-ENV FLAVOUR=amd64
-
-# Clone the release build into a temporary directory and unpack it
-RUN curl "https://git.pleroma.social/api/v4/projects/2/jobs/artifacts/stable/download?job=$FLAVOUR" -o /tmp/pleroma.zip && \
-    unzip /tmp/pleroma.zip -d /tmp/ && \
-    mv /tmp/release/* /opt/pleroma && \
-    rmdir /tmp/release && \
-    rm /tmp/pleroma.zip && \
-    mkdir -p /opt/pleroma/bin
 
 COPY *.sh /opt/pleroma/bin/
 
@@ -52,7 +65,7 @@ EXPOSE 4000
 STOPSIGNAL SIGTERM
 
 HEALTHCHECK \
-    --start-period=10m \
+    --start-period=2m \
     --interval=5m \
     CMD curl --fail http://localhost:4000/api/v1/instance || exit 1
 
