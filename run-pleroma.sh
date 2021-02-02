@@ -11,10 +11,10 @@ if [ ! -e "$PLEROMA_CONFIG_PATH" ] ; then
   generate-pleroma-config.sh
 fi
 
-if [ "${USE_RUM:-n}" = "y" ] ; then
-  pleroma_ctl migrate
-fi
+pleroma_ctl migrate
 
-pleroma_ctl migrate --migrations-path priv/repo/optional_migrations/rum_indexing/
+if [ "${USE_RUM:-n}" = "y" ] ; then
+  pleroma_ctl migrate --migrations-path priv/repo/optional_migrations/rum_indexing/
+fi
 
 exec pleroma start
