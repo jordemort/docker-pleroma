@@ -36,7 +36,6 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-
 RUN mkdir -p /etc/pleroma /var/lib/pleroma/static /var/lib/pleroma/uploads && \
     adduser --system --shell /bin/false --home /opt/pleroma --group pleroma && \
     chown -vR pleroma /etc/pleroma /var/lib/pleroma
