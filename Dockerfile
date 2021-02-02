@@ -26,11 +26,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-      ca-certificates curl dumb-init ffmpeg gnupg imagemagick libimage-exiftool-perl libmagic-dev libncurses5 locales unzip && \
-    curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
-    echo "deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main" > /etc/apt/sources.list.d/postgres.list && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends postgresql-client-13 && \
+      ca-certificates curl dumb-init ffmpeg gnupg imagemagick libimage-exiftool-perl libmagic-dev libncurses5 locales posgresql-client-12 unzip && \
     apt-get clean
 
 RUN echo 'en_US.UTF-8 UTF-8' > /etc/locale.gen && \
