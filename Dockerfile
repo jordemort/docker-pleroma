@@ -26,7 +26,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-      ca-certificates curl dumb-init ffmpeg gnupg imagemagick libimage-exiftool-perl libmagic-dev libncurses5 locales posgresql-client-12 unzip && \
+      ca-certificates curl dumb-init ffmpeg gnupg imagemagick libimage-exiftool-perl libmagic-dev libncurses5 locales postgresql-client-12 unzip && \
     apt-get clean
 
 RUN echo 'en_US.UTF-8 UTF-8' > /etc/locale.gen && \
