@@ -17,6 +17,7 @@ name: Publish container
 
 env:
   CONTAINER_NAME: jordemort/pleroma:${{ github.event.inputs.container_tag || 'latest' }}
+  CACHE_NAME: jordemort/pleroma:cache-unzip
   DOCKER_CLI_EXPERIMENTAL: enabled
 
 jobs:
@@ -41,4 +42,16 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build and push container
-        run: docker buildx build --push --pull --platform "linux/amd64,linux/arm64,linux/arm/v7" --cache-from "$CONTAINER_NAME" --tag "$CONTAINER_NAME" .
+        run: |
+          docker buildx build --push --pull \
+            --platform "linux/amd64,linux/arm64,linux/arm/v7" \
+            --cache-from "$CACHE_NAME" \
+            --tag "$CACHENAME" --target unzip .
+
+      - name: Build and push container
+        run: |
+          docker buildx build --push --pull \
+            --platform "linux/amd64,linux/arm64,linux/arm/v7" \
+            --cache-from "$CACHE_NAME" \
+            --cache-from "$CONTAINER_NAME" \
+            --tag "$CONTAINER_NAME" .
