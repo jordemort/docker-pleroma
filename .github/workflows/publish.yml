@@ -11,7 +11,7 @@ on:
       - main
 
   schedule:
-    - cron: '0 0 12 1/1 *'
+    - cron: '0 0 1/1 * *'
 
 name: Publish container
 
