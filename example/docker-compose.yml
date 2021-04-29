@@ -1,3 +1,4 @@
+version: '3.7'
 services:
 
   pleroma:
@@ -7,7 +8,7 @@ services:
     networks:
       pleromanet:
     ports:
-      - 127.0.0.1:4000:4000
+      - 4000:4000
     volumes:
       - config:/etc/pleroma
       - uploads:/var/lib/pleroma/uploads
@@ -16,6 +17,7 @@ services:
       DOMAIN: localhost
       ADMIN_EMAIL: chicken@example.com
       USE_RUM: "y"
+      USE_SOAPBOX: "n"
       POSTGRES_PASSWORD: hunter2
 
   postgres:

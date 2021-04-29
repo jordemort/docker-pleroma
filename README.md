@@ -39,6 +39,8 @@ See the [documentation for `instance gen`](https://docs-develop.pleroma.social/b
 
 If you want to use RUM indexes, you need a [PostgreSQL container that supports them](https://github.com/jordemort/docker-postgres-rum/).
 
+If you would like to use the [SoapBox UI](https://soapbox.pub/), you can set an environment variable USE_SOAPBOX to "y".
+
 ## Persistence
 
 If you want your instance data to persist properly, you need to mount volumes on the following directories:

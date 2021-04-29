@@ -40,9 +40,13 @@ RUN mkdir -p /etc/pleroma /var/lib/pleroma/static /var/lib/pleroma/uploads && \
     adduser --system --shell /bin/false --home /opt/pleroma --group pleroma && \
     chown -vR pleroma /etc/pleroma /var/lib/pleroma
 
+
 COPY --chown=pleroma:pleroma --from=unzip /opt/pleroma/ /opt/pleroma/
 
 VOLUME [ "/etc/pleroma", "/var/lib/pleroma/uploads", "/var/lib/pleroma/static" ]
+
+ADD https://gitlab.com/soapbox-pub/soapbox-fe/-/jobs/artifacts/v1.2.3/download?job=build-production /tmp/soapbox-fe.zip
+RUN chown pleroma /tmp/soapbox-fe.zip
 
 USER pleroma
 
