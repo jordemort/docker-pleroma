@@ -24,6 +24,8 @@ FROM ubuntu:20.04 AS pleroma
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+ARG SOAPBOXVERSION=1.2.3
+
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
       ca-certificates curl dumb-init ffmpeg gnupg imagemagick libimage-exiftool-perl libmagic-dev libncurses5 locales postgresql-client-12 unzip && \
@@ -44,7 +46,7 @@ COPY --chown=pleroma:pleroma --from=unzip /opt/pleroma/ /opt/pleroma/
 
 VOLUME [ "/etc/pleroma", "/var/lib/pleroma/uploads", "/var/lib/pleroma/static" ]
 
-ADD https://gitlab.com/soapbox-pub/soapbox-fe/-/jobs/artifacts/v1.2.3/download?job=build-production /tmp/soapbox-fe.zip
+ADD https://gitlab.com/soapbox-pub/soapbox-fe/-/jobs/artifacts/v${SOAPBOXVERSION}/download?job=build-production /tmp/soapbox-fe.zip
 RUN chown pleroma /tmp/soapbox-fe.zip
 
 USER pleroma
