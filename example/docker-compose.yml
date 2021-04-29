@@ -16,6 +16,7 @@ services:
       DOMAIN: localhost
       ADMIN_EMAIL: chicken@example.com
       USE_RUM: "y"
+      USE_SOAPBOX: "n"
       POSTGRES_PASSWORD: hunter2
 
   postgres:

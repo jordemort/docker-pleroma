@@ -44,6 +44,9 @@ COPY --chown=pleroma:pleroma --from=unzip /opt/pleroma/ /opt/pleroma/
 
 VOLUME [ "/etc/pleroma", "/var/lib/pleroma/uploads", "/var/lib/pleroma/static" ]
 
+ADD https://gitlab.com/soapbox-pub/soapbox-fe/-/jobs/artifacts/v1.2.3/download?job=build-production /tmp/soapbox-fe.zip
+RUN chown pleroma /tmp/soapbox-fe.zip
+
 USER pleroma
 
 COPY *.sh /opt/pleroma/bin/

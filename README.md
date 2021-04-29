@@ -35,9 +35,12 @@ The container will try to infer reasonable defaults for the rest of the variable
 | `--anonymize-uploads` | `ANONYMIZE_UPLOADS` | y |
 | `--dedupe-uploads` | `DEDUPE_UPLOADS` | y |
 
+
 See the [documentation for `instance gen`](https://docs-develop.pleroma.social/backend/administration/CLI_tasks/instance/) for more information.
 
 If you want to use RUM indexes, you need a [PostgreSQL container that supports them](https://github.com/jordemort/docker-postgres-rum/).
+
+If you would like to use the [SoapBox UI](https://soapbox.pub/) instead of the normal Pleroma UI, you can set an environment variable USE_SOAPBOX to "y". SoapBox is a alternative to the normal Pleroma UI and emphasizes easier private branding and theming.
 
 ## Persistence
 

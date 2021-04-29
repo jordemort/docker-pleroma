@@ -17,4 +17,9 @@ if [ "${USE_RUM:-n}" = "y" ] ; then
   pleroma_ctl migrate --migrations-path priv/repo/optional_migrations/rum_indexing/
 fi
 
+if [ "${USE_SOAPBOX:-n}" = "y" ]; then
+  unzip -o /tmp/soapbox-fe.zip -d /var/lib/pleroma
+  rm /tmp/soapbox-fe.zip
+fi
+
 exec pleroma start
