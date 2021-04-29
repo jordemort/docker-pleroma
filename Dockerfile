@@ -40,7 +40,6 @@ RUN mkdir -p /etc/pleroma /var/lib/pleroma/static /var/lib/pleroma/uploads && \
     adduser --system --shell /bin/false --home /opt/pleroma --group pleroma && \
     chown -vR pleroma /etc/pleroma /var/lib/pleroma
 
-
 COPY --chown=pleroma:pleroma --from=unzip /opt/pleroma/ /opt/pleroma/
 
 VOLUME [ "/etc/pleroma", "/var/lib/pleroma/uploads", "/var/lib/pleroma/static" ]
