@@ -37,7 +37,7 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_TOKEN }}
 
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v3.0.1
         with:
           submodules: recursive
 
