@@ -24,7 +24,7 @@ FROM ubuntu:20.04 AS pleroma
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-ARG SOAPBOXVERSION=1.2.3
+ARG SOAPBOXVERSION=1.3.0
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
