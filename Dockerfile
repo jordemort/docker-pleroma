@@ -5,15 +5,14 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install -y --no-install-recommends unzip
 
-# docker buildx will fill these in
-ARG TARGETARCH=amd64
-ARG TARGETVARIANT=
+# docker buildx will fill this in
+ARG TARGETARCH 
 
 # Clone the release build into a temporary directory and unpack it
 # We use ADD here to bust the cache if the pleroma release changes
 # We use a separate layer for extraction so we don't end up with junk
 # from ADD left over in the final image.
-ADD https://git.pleroma.social/api/v4/projects/2/jobs/artifacts/stable/download?job=${TARGETARCH}${TARGETVARIANT:+${TARGETVARIANT}l} /tmp/pleroma.zip
+ADD https://git.pleroma.social/api/v4/projects/2/jobs/artifacts/stable/download?job=${TARGETARCH} /tmp/pleroma.zip
 
 RUN mkdir -p /opt/pleroma && \
     unzip /tmp/pleroma.zip -d /tmp/ && \
