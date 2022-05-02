@@ -1,3 +1,6 @@
+ARG USERNAME=pleroma
+ARG USER_UID=1000
+
 FROM ubuntu:20.04 AS unzip
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -37,8 +40,10 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
+ARG USERNAME USER_UID
+
 RUN mkdir -p /etc/pleroma /var/lib/pleroma/static /var/lib/pleroma/uploads && \
-    adduser --system --shell /bin/false --home /opt/pleroma --group pleroma && \
+    adduser --system --shell /bin/false --home /opt/pleroma --group --uid "${USER_UID}" "${USERNAME}" && \
     chown -vR pleroma /etc/pleroma /var/lib/pleroma
 
 ARG TARGETARCH
@@ -50,7 +55,7 @@ VOLUME [ "/etc/pleroma", "/var/lib/pleroma/uploads", "/var/lib/pleroma/static" ]
 ADD https://gitlab.com/soapbox-pub/soapbox-fe/-/jobs/artifacts/v${SOAPBOXVERSION}/download?job=build-production /tmp/soapbox-fe.zip
 RUN chown pleroma /tmp/soapbox-fe.zip
 
-USER pleroma
+USER ${USERNAME}
 
 COPY *.sh /opt/pleroma/bin/
 
