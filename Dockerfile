@@ -14,9 +14,9 @@ ARG TARGETARCH
 # from ADD left over in the final image.
 ADD https://git.pleroma.social/api/v4/projects/2/jobs/artifacts/stable/download?job=${TARGETARCH} /tmp/pleroma.zip
 
-RUN mkdir -p /opt/pleroma && \
+RUN mkdir -p /opt/pleroma-${TARGETARCH} && \
     unzip /tmp/pleroma.zip -d /tmp/ && \
-    mv /tmp/release/* /opt/pleroma
+    mv /tmp/release/* /opt/pleroma-${TARGETARCH}
 
 # Ok, really build the container now
 FROM ubuntu:20.04 AS pleroma
@@ -41,7 +41,9 @@ RUN mkdir -p /etc/pleroma /var/lib/pleroma/static /var/lib/pleroma/uploads && \
     adduser --system --shell /bin/false --home /opt/pleroma --group pleroma && \
     chown -vR pleroma /etc/pleroma /var/lib/pleroma
 
-COPY --chown=pleroma:pleroma --from=unzip /opt/pleroma/ /opt/pleroma/
+ARG TARGETARCH
+
+COPY --chown=pleroma:pleroma --from=unzip /opt/pleroma-${TARGETARCH}/ /opt/pleroma/
 
 VOLUME [ "/etc/pleroma", "/var/lib/pleroma/uploads", "/var/lib/pleroma/static" ]
 
