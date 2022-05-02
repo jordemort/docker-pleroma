@@ -2,6 +2,12 @@
 
 This is a Docker image for running [Pleroma](https://pleroma.social), based on the [official installation instructions](https://docs-develop.pleroma.social/backend/installation/otp_en/) and `ubuntu:20.04`. Build it yourself, or get it from [Docker Hub](https://hub.docker.com/r/jordemort/pleroma).
 
+## ⚠️ This container is semi-unmaintained ⚠️
+
+I built this in 2021 with the intention of setting up a Pleroma instance. Then, I never did. I don't currently use this container in production, and I never have. It seems like other people are using it, so for now I'm fixing things when I can, in my spare time. I could very easily get bored and wander off or experience a shortage of spare time, though.
+
+If you like this container and feel like stepping up to maintain it, I encourage you to fork it and let me know - I will cheerfully archive this and link folks over to yours.
+
 ## Configuration
 
 The container expects to find a Pleroma configuration file at `/etc/pleroma/config.exs`. If the configuration does not exist, the container will call `pleroma_ctl instance gen` for you. The parameters passed to `instance gen` can be influenced by a number of environment variables.
