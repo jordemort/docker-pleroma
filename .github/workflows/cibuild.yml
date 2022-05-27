@@ -42,7 +42,7 @@ jobs:
 
       # Needed for buildx gha cache to work
       - name: Expose GitHub Runtime
-        uses: crazy-max/ghaction-github-runtime@v1
+        uses: crazy-max/ghaction-github-runtime@v2
 
 
       - name: Build and push container
