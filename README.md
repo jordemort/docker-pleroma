@@ -2,7 +2,7 @@
 
 This is a Docker image for running [Pleroma](https://pleroma.social), based on the [official installation instructions](https://docs-develop.pleroma.social/backend/installation/otp_en/) and `ubuntu:20.04`. Build it yourself, or get it from [Docker Hub](https://hub.docker.com/r/jordemort/pleroma).
 
-## ⚠️ This container is no longer tmaintained ⚠️
+## ⚠️ This container is no longer maintained ⚠️
 
 I built this in 2021 with the intention of setting up a Pleroma instance. Then, I never did. I don't currently use this container in production, and I never have. I have archived this repository and removed the container from Docker Hub.
 
